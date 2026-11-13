@@ -4,7 +4,7 @@ LOG_FILE=${1:-"/var/log/nginx/access.log"}
 echo "=== Comarch Operations Log Analysis Report ==="
 echo "Timestamp: $(date)"
 
-if [ ! -f "$LOG_FILE"]; then
+if [ ! -f "$LOG_FILE" ]; then
     echo "[WARNING] Log file not found at $LOG_FILE. Generating sample check..."
     exit 0
 fi
