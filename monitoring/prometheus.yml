@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'loyalty-web-health'
+    metrics_path: /
+    static_configs:
+      - targets: ['loyalty-web:80']
+      
