@@ -15,7 +15,7 @@ resource "local_file" "service_config" {
   filename = "${path.module}/../app/service.conf"
   content = <<-EOT
     SERVICE_NAME=comarch-loyalty-portal
-    ENVIROMNMENT=${var.environment}
+    ENVIRONMENT=${var.environment}
     HIGH_AVAILABILITY=true
     MONITORING_ENABLED=true
   EOT
