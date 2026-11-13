@@ -1,0 +1,34 @@
+name: Comarch DevOps CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Loyalty Web Docker Image
+        run: |
+          docker build -t comarch-loyalty-web:latest ./app
+
+      - name: Validate Kubernetes Manifests
+        run: |
+          kubectl create --dry-run=client --validate=false -f k8s/
+
+      - name: Validate Terraform Configuration
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.0"
+
+      - name: Terraform Init & Validate
+        working-directory: ./terraform
+        run: |
+          terraform init -backend=false
+          terraform validate
